@@ -397,9 +397,9 @@ public class ContactOrganizer {
                 System.out.println("\nContact has been deleted successfully...\n");
                 System.out.print("Do you want to delete another contact(Y/N) : ");
                 String opt1 = input.next();
-                if (opt1.equalsIgnoreCase("Y")){
-                    deleteContacts();
-                }else if (opt1.equalsIgnoreCase("N")) {
+                if (opt1.equalsIgnoreCase("Y")) {
+                    continue;
+                } else if (opt1.equalsIgnoreCase("N")) {
                     clearConsole();
                     homePage();
                     break;
@@ -409,24 +409,81 @@ public class ContactOrganizer {
                 homePage();
                 break;
             }
-        }while (true);
+            break;
+        } while (true);
     }
-    public static void delete(int index){
-        Contacts[] tempContactArray = new Contacts[contactsArray.length-1];
-        for (int i = 0; i < contactsArray.length-1; i++) {
-            if (i>=index){
-                tempContactArray[i]=contactsArray[i+1];
-            }else{
-                tempContactArray[i]=contactsArray[i];
+
+    public static void delete(int index) {
+        Contacts[] tempContactArray = new Contacts[contactsArray.length - 1];
+        for (int i = 0; i < contactsArray.length - 1; i++) {
+            if (i >= index) {
+                tempContactArray[i] = contactsArray[i + 1];
+            } else {
+                tempContactArray[i] = contactsArray[i];
             }
         }
-        contactsArray=tempContactArray;
+        contactsArray = tempContactArray;
     }
-    public static void searchContacts() {
 
+    public static void searchContacts() {
+        Scanner input = new Scanner(System.in);
+        do {
+            System.out.println("------------------------------------------------------------");
+            System.out.println("|                      Search Contact                      |");
+            System.out.println("------------------------------------------------------------\n");
+            System.out.print("Search Contact by Name or Phone Number : ");
+            String nameOrPhone = input.next();
+            int index = search(nameOrPhone);
+            if (index == -1) {
+                System.out.println("No Contact found for \"" + nameOrPhone + "\"");
+                continue;
+            }
+            System.out.println("Contact ID   : " + contactsArray[index].getId());
+            System.out.println("Name         : " + contactsArray[index].getName());
+            System.out.println("Phone Number : " + contactsArray[index].getPhoneNumber());
+            System.out.println("Company Name : " + contactsArray[index].getCompanyName());
+            System.out.println("Salary       : " + contactsArray[index].getSalary());
+            System.out.println("Birthday     : " + contactsArray[index].getDob());
+            System.out.print("\nDo you want to search another contact(Y/N) : ");
+            String opt = input.next();
+            if (opt.equalsIgnoreCase("Y")) {
+                continue;
+            } else if (opt.equalsIgnoreCase("N")) {
+                clearConsole();
+                homePage();
+                break;
+            }
+            break;
+        } while (true);
     }
 
     public static void listContacts() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("------------------------------------------------------------");
+        System.out.println("|                       List Contacts                      |");
+        System.out.println("------------------------------------------------------------\n");
+        System.out.println("\t[01] Sort by Name");
+        System.out.println("\t[02] Sort by Salary");
+        System.out.println("\t[03] Sort by Birthday");
+        System.out.println("\t[04] Default View\n");
+        System.out.print("Enter an option to continue(Y/N) : ");
+        int opt = input.nextInt();
+        switch (opt) {
+            case 1:
+                sortByName();
+                break;
+            case 2:
+                //sortBySalary();
+                break;
+            case 3:
+                //sortByBirthday();
+                break;
+            default:
+                //printContactsDetails();
+        }
+    }
+
+    public static void sortByName() {
 
     }
 
