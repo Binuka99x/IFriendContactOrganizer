@@ -17,18 +17,23 @@ class Contacts {
         this.salary = salary;
         this.dob = dob;
     }
-    public void setName(String name){
+
+    public void setName(String name) {
         this.name = name;
     }
-    public void setPhoneNumber(String phoneNumber){
+
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-    public void setCompanyName(String companyName){
+
+    public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
-    public void setSalary(double salary){
+
+    public void setSalary(double salary) {
         this.salary = salary;
     }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -260,7 +265,8 @@ public class ContactOrganizer {
             }
         } while (true);
     }
-    public static void updatePhoneNumber(int index){
+
+    public static void updatePhoneNumber(int index) {
         Scanner input = new Scanner(System.in);
         System.out.print("\033[7A");
         System.out.print("\033[0J");
@@ -270,12 +276,12 @@ public class ContactOrganizer {
         do {
             System.out.print("Input New Phone Number : ");
             phoneNumber = input.next();
-            if (!isValidPhoneNumber(phoneNumber)){
+            if (!isValidPhoneNumber(phoneNumber)) {
                 System.out.println("Invalid Phone Number....Try again..");
                 continue;
             }
             break;
-        }while (true);
+        } while (true);
         contactsArray[index].setPhoneNumber(phoneNumber);
         System.out.println("Contact update successfully...");
         System.out.print("Do you want to update a another Contact(Y/N) : ");
@@ -287,7 +293,8 @@ public class ContactOrganizer {
             homePage();
         }
     }
-    public static void updateSalary(int index){
+
+    public static void updateSalary(int index) {
         Scanner input = new Scanner(System.in);
         System.out.print("\033[7A");
         System.out.print("\033[0J");
@@ -297,12 +304,12 @@ public class ContactOrganizer {
         do {
             System.out.print("Input New Salary : ");
             salary = input.nextDouble();
-            if (salary<0){
+            if (salary < 0) {
                 System.out.println("Invalid Salary....Try again..");
                 continue;
             }
             break;
-        }while (true);
+        } while (true);
         contactsArray[index].setSalary(salary);
         System.out.println("Contact update successfully...");
         System.out.print("Do you want to update a another Contact(Y/N) : ");
@@ -314,7 +321,8 @@ public class ContactOrganizer {
             homePage();
         }
     }
-    public static void updateCompanyName(int index){
+
+    public static void updateCompanyName(int index) {
         Scanner input = new Scanner(System.in);
         System.out.print("\033[7A");
         System.out.print("\033[0J");
@@ -333,7 +341,8 @@ public class ContactOrganizer {
             homePage();
         }
     }
-    public static void updateName(int index){
+
+    public static void updateName(int index) {
         Scanner input = new Scanner(System.in);
         System.out.print("\033[7A");
         System.out.print("\033[0J");
@@ -363,9 +372,56 @@ public class ContactOrganizer {
     }
 
     public static void deleteContacts() {
-
+        Scanner input = new Scanner(System.in);
+        do {
+            System.out.println("------------------------------------------------------------");
+            System.out.println("|                      Delete Contact                      |");
+            System.out.println("------------------------------------------------------------\n");
+            System.out.print("Search Contact by Name or Phone Number : ");
+            String nameOrPhone = input.next();
+            int index = search(nameOrPhone);
+            if (index == -1) {
+                System.out.println("No Contact found for \"" + nameOrPhone + "\"");
+                continue;
+            }
+            System.out.println("Contact ID   : " + contactsArray[index].getId());
+            System.out.println("Name         : " + contactsArray[index].getName());
+            System.out.println("Phone Number : " + contactsArray[index].getPhoneNumber());
+            System.out.println("Company Name : " + contactsArray[index].getCompanyName());
+            System.out.println("Salary       : " + contactsArray[index].getSalary());
+            System.out.println("Birthday     : " + contactsArray[index].getDob());
+            System.out.print("\nDo you want to delete this contact(Y/N) : ");
+            String opt = input.next();
+            if (opt.equalsIgnoreCase("Y")) {
+                delete(index);
+                System.out.println("\nContact has been deleted successfully...\n");
+                System.out.print("Do you want to delete another contact(Y/N) : ");
+                String opt1 = input.next();
+                if (opt1.equalsIgnoreCase("Y")){
+                    deleteContacts();
+                }else if (opt1.equalsIgnoreCase("N")) {
+                    clearConsole();
+                    homePage();
+                    break;
+                }
+            } else if (opt.equalsIgnoreCase("N")) {
+                clearConsole();
+                homePage();
+                break;
+            }
+        }while (true);
     }
-
+    public static void delete(int index){
+        Contacts[] tempContactArray = new Contacts[contactsArray.length-1];
+        for (int i = 0; i < contactsArray.length-1; i++) {
+            if (i>=index){
+                tempContactArray[i]=contactsArray[i+1];
+            }else{
+                tempContactArray[i]=contactsArray[i];
+            }
+        }
+        contactsArray=tempContactArray;
+    }
     public static void searchContacts() {
 
     }
