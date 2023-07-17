@@ -218,7 +218,12 @@ public class ContactOrganizer {
     }
 
     public static String generateContactID() {
-        return String.format("C%04d", (contactsArray.length + 1));
+        if (contactsArray.length==0){
+            return "C0001";
+        }
+        String lastID=contactsArray[contactsArray.length-1].getId();
+        int lastNum = Integer.parseInt(lastID.substring(1));
+        return String.format("C%04d", (lastNum + 1));
     }
 
     public static void updateContacts() {
